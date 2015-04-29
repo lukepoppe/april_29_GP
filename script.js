@@ -26,11 +26,16 @@ function searchCallback(results) {
 					'<button class="btn btn-sm btn-danger removeBtn">remove</button>' + 
 				'<div>'
 			).hide().fadeIn('slow');
+		$('#menu').append('<button class="btn btn-sm pgNum" id="item'+ i +'" data-numId = "'+i+'"> '+i+'</button>'
+			)
 			
+		
+
 	}
 	$('#searchResults').children().first().removeClass('hidden');
 	interval = 0;
 	maxInt = i;
+
 };	
 
 var userInput = "";
@@ -53,6 +58,15 @@ $(document).ready(function() {
 		$(this).parent().fadeOut('slow');
 	});
 
+
+	$("#menu").on('click', '.pgNum', function(){
+		$('#searchResults').children().addClass('hidden');
+		var find = $(this).data("numId");
+		$('#searchResults').children('#result' + interval).removeClass('hidden');
+
+		});
+	
+
 	$('.container').on("click", ".right", function (e){
 		e.preventDefault();
 		interval++;
@@ -73,6 +87,7 @@ $(document).ready(function() {
 		$('#searchResults').children().addClass('hidden');
 		$('#searchResults').children('#result' + interval).removeClass('hidden');
 		console.log(interval);
+
 	});
 });
 
