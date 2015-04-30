@@ -17,7 +17,7 @@ function searchCallback(results) {
 			platformName += " - " + results[i].platforms[j].name;
 		}
 		$('#searchResults').append(
-				'<div id="result' + i + '" class="col-md-6 well resultHeight text-center hidden">' +
+				'<div id="result' + i + '" class="col-md-4 well resultHeight text-center hidden">' +
 					'<div id="name"><p>Game: ' + results[i].name + '</p></div>' +
 					'<div id="image"><img class="hidden-sm hidden-xs" src="' + results[i].image.small_url + '"/></div>' +
 					'<div id="description" class="bill"><h5>Description:</h5> ' + results[i].deck + '</div>' +
@@ -26,8 +26,7 @@ function searchCallback(results) {
 					'<button class="btn btn-sm btn-danger removeBtn">remove</button>' + 
 				'<div>'
 			).hide().fadeIn('slow');
-		$('#menu').append('<button class="btn btn-sm pgNum" id="item'+ i +'" data-numId = "'+i+'"> '+i+'</button>'
-			)
+		$('#menu').append('<div class="pgNum" id="item'+ i +'"></div>');
 			
 		
 
@@ -56,16 +55,9 @@ $(document).ready(function() {
 	});
 	$('#searchResults').on('click', '.removeBtn', function(){
 		$(this).parent().fadeOut('slow');
-	});
+});
 
 
-	$("#menu").on('click', '.pgNum', function(){
-		$('#searchResults').children().addClass('hidden');
-		var find = $(this).data("numId");
-		$('#searchResults').children('#result' + interval).removeClass('hidden');
-
-		});
-	
 
 	$('.container').on("click", ".right", function (e){
 		e.preventDefault();
@@ -75,6 +67,7 @@ $(document).ready(function() {
 			}
 		$('#searchResults').children().addClass('hidden');
 		$('#searchResults').children('#result' + interval).removeClass('hidden');
+		$('.pgNum').siblings().first().addClass('.pgNum2');
 		console.log(interval);
 	});
 	$('.container').on("click", ".left", function (e){
@@ -87,6 +80,40 @@ $(document).ready(function() {
 		$('#searchResults').children().addClass('hidden');
 		$('#searchResults').children('#result' + interval).removeClass('hidden');
 		console.log(interval);
+
+	});
+	$('.pagination').on("click", ".right", function (e){
+		e.preventDefault();
+		interval++;
+			if(interval == 8){
+			interval = 0;
+			}
+		$('#searchResults').children().addClass('hidden');
+		$('#searchResults').children('#result' + interval).removeClass('hidden');
+		$('.pgNum').siblings().first().addClass('.pgNum2');
+		console.log(interval);
+	});
+	$('.pagination').on("click", ".menuLeft", function (e){
+			console.log("left click worked");
+		e.preventDefault();
+		interval--;
+			if(interval == -1){
+			interval = 7;
+			}
+			console.log("function actually ran");
+		$('#searchResults').children().addClass('hidden');
+		$('#searchResults').children('#result' + interval).removeClass('hidden');
+		
+
+	});
+
+
+	$('.pagination').on('click', 'a', function(){
+	$('#searchResults').children().addClass('hidden');
+		var identifier = $(this).data("id");
+		
+		interval = identifier;
+		$('#searchResults').children('#result' + interval).removeClass('hidden');
 
 	});
 });
