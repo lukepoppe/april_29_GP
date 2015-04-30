@@ -43,6 +43,7 @@ $(document).ready(function() {
 	console.log("Document Ready");
 	$('.searchBtn').on('click', function(){
 		$('#searchResults').empty();
+		$('#searchResults').append("Searching!");
 		userInput = $('#searchField').val();
 		search(userInput);
 	});
@@ -59,6 +60,18 @@ $(document).ready(function() {
 
 
 
+	$('.container').on("click", ".left", function (e){
+		e.preventDefault();
+		interval--;
+			if(interval == -1){
+			interval = 7;
+			}
+
+		$('#searchResults').children().addClass('hidden');
+		$('#searchResults').children('#result' + interval).removeClass('hidden');
+		console.log(interval);
+
+	});
 	$('.container').on("click", ".right", function (e){
 		e.preventDefault();
 		interval++;
@@ -82,38 +95,15 @@ $(document).ready(function() {
 		console.log(interval);
 
 	});
-	$('.pagination').on("click", ".right", function (e){
-		e.preventDefault();
-		interval++;
-			if(interval == 8){
-			interval = 0;
-			}
-		$('#searchResults').children().addClass('hidden');
-		$('#searchResults').children('#result' + interval).removeClass('hidden');
-		$('.pgNum').siblings().first().addClass('.pgNum2');
-		console.log(interval);
-	});
-	$('.pagination').on("click", ".menuLeft", function (e){
-			console.log("left click worked");
-		e.preventDefault();
-		interval--;
-			if(interval == -1){
-			interval = 7;
-			}
-			console.log("function actually ran");
-		$('#searchResults').children().addClass('hidden');
-		$('#searchResults').children('#result' + interval).removeClass('hidden');
-		
-
-	});
 
 
 	$('.pagination').on('click', 'a', function(){
 	$('#searchResults').children().addClass('hidden');
 		var identifier = $(this).data("id");
-		
+		console.log(identifier);
 		interval = identifier;
 		$('#searchResults').children('#result' + interval).removeClass('hidden');
+		$('.pagination').children(identifier).addClass("green");
 
 	});
 });
